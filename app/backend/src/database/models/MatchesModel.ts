@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import TeamTable from './TeamModel';
+import TeamTable from './TeamsModel';
 
-class Match extends Model {
+class Matches extends Model {
   id!: number;
   homeTeam!: number;
   homeTeamGoals!: number;
@@ -13,7 +13,7 @@ class Match extends Model {
   teamAway!: TeamTable;
 }
 
-Match.init({
+Matches.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -47,12 +47,12 @@ Match.init({
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'Match',
+  modelName: 'matches',
   timestamps: false,
 });
 
 // Create an association between this (the source) and the provided target. The foreign key is added on the source.
-Match.belongsTo(TeamTable, { foreignKey: 'homeTeam', as: 'teamHome' });
-Match.belongsTo(TeamTable, { foreignKey: 'awayTeam', as: 'teamAway' });
+Matches.belongsTo(TeamTable, { foreignKey: 'homeTeam', as: 'teamHome' });
+Matches.belongsTo(TeamTable, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-export default Match;
+export default Matches;
