@@ -11,9 +11,9 @@ chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-const UserLogin = {
-  email: 'divinesmite@critic.com',
-  password: 'secret_admin',
+const userLogin = {
+  email: 'user@user.com',
+  password: 'secret_user',
 }
 
 const userSeeders =  [
@@ -49,7 +49,7 @@ describe('Rota Login', () => {
     it('Deve retornar o status 200 caso tenha sucesso no login', async () => {
       const response = await chai.request(app)
         .post('/login')
-        .send(UserLogin);
+        .send(userLogin);
 
       expect(response.body).to.have.property('token');
       expect(response.status).to.be.equal(200);
