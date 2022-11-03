@@ -1,6 +1,6 @@
 interface TeamsInterface {
   id: number;
-  teamName: string;
+  teamsName: string;
 }
 
 export default TeamsInterface;

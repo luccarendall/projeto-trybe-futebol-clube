@@ -14,7 +14,7 @@ Teams.init({
     allowNull: false,
   },
 
-  teamsName: {
+  teamName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
