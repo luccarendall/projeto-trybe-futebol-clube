@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as JWT from 'jsonwebtoken';
 
-// O lint indica que tá errado mas se coloco com o from o test:coverage quebra
+// @ts-ignore (resolveu a quebra de lint no require abaixo)
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
@@ -38,7 +38,8 @@ const tokenLogin = JWT.sign({ userId: 1 }, 'jwt_secret', {
   expiresIn: '1d',
 });
 
-describe('Rota Login', () => {
+// DOC: https://stackoverflow.com/questions/22762301/mocha-beforeeach-and-aftereach-during-testing
+describe('Testes para a rota /Login', () => {
   describe('Usuário válido', () => {
     beforeEach(async () => {
       sinon.stub(User, 'findOne').resolves(userSeeders[0] as User);
