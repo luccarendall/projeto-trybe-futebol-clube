@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import LoginService from '../services/loginService';
+import CustomError from '../CustomError/CustomError';
 
 class LoginController {
   constructor(private loginService = new LoginService()) { }
@@ -11,5 +12,18 @@ class LoginController {
 
     return res.status(200).json({ token });
   };
+
+  public loginToken = async (req: Request, res: Response) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) throw new CustomError(401, 'Invalid Token!');
+
+    // https://github.com/mikenicholson/passport-jwt/issues/117
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+    const token = authorization.replace('Bearer ', '');
+    const role = await this.loginService.loginToken(token);
+    return res.status(200).json({ role });
+  };
 }
+
 export default LoginController;

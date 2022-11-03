@@ -1,6 +1,8 @@
 import * as bcrypt from 'bcryptjs';
 import * as JWT from 'jsonwebtoken';
 import UserTable from '../database/models/UserModel';
+import TokenInterface from '../interfaces/TokenInterface';
+import UserInterface from '../interfaces/UserInterface';
 
 class LoginService {
   model: UserTable;
@@ -31,6 +33,17 @@ class LoginService {
     );
 
     return token;
+  };
+
+  public loginToken = async (token: string): Promise<string> => {
+    const decodedToken = JWT.verify(token, 'jwt_secret') as TokenInterface;
+
+    // https://sebhastian.com/sequelize-findone/
+    const userData = await UserTable.findOne(
+      { where: { id: decodedToken.id } },
+    ) as UserInterface;
+
+    return userData.role;
   };
 }
 

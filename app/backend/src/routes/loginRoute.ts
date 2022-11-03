@@ -5,8 +5,9 @@ import LoginValidation from '../middlewares/ValidateLogin';
 const loginRoute = Router();
 
 const loginController = new LoginController();
-const ValidateLogin = new LoginValidation();
+const loginValidation = new LoginValidation();
 
-loginRoute.post('/', ValidateLogin.validate, loginController.login);
+loginRoute.post('/', loginValidation.validate, loginController.login);
+loginRoute.get('/validate', loginController.loginToken);
 
 export default loginRoute;
