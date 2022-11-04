@@ -25,6 +25,21 @@ class MatchesController {
 
     return res.status(200).json(inProgressMatchesFinded);
   };
+
+  public featNewMatch = async (req: Request, res: Response) => {
+    const match = req.body;
+
+    const newMatch = await this.matchesServices.featNewMatch(match);
+
+    return res.status(201).json(newMatch);
+  };
+
+  public finishedMatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    await this.matchesServices.finishedMatch(id);
+
+    return res.status(200).json({ message: 'Finished' });
+  };
 }
 
 export default MatchesController;

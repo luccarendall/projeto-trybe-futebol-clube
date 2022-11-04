@@ -1,6 +1,7 @@
 import MatchModel from '../database/models/MatchesModel';
 import TeamModel from '../database/models/TeamsModel';
 import MatchesInterface from '../interfaces/MatchesInterface';
+import CustomError from '../CustomError/CustomError';
 
 class MatchesService {
   public model = MatchModel;
@@ -41,6 +42,28 @@ class MatchesService {
 
     return data as unknown as MatchesInterface[];
   }
+
+  public featNewMatch = async (
+    matchParams: Omit<MatchModel, 'id' | 'inProgress'>,
+  ): Promise<MatchModel> => {
+    const newMatch = await this.model.create(
+      { ...matchParams, inProgress: true },
+    );
+
+    return newMatch;
+  };
+
+  public finishedMatch = async (id: string): Promise<void> => {
+    const findedMatchById = await MatchModel.findByPk(id);
+
+    if (!findedMatchById) {
+      throw new CustomError(404, 'There is no team with such id!');
+    }
+
+    await findedMatchById.update(
+      { inProgress: false },
+    );
+  };
 }
 
 export default MatchesService;
