@@ -9,5 +9,6 @@ const matchesController = new MatchesController();
 matchesRoute.get('/', matchesController.findMatchByProgress);
 matchesRoute.post('/', matchesController.featNewMatch);
 matchesRoute.put('/:id/finish', matchesController.finishedMatch);
+matchesRoute.put('/:id', matchesController.updateMatch);
 
 export default matchesRoute;

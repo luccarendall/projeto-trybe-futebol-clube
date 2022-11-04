@@ -64,6 +64,26 @@ class MatchesService {
       { inProgress: false },
     );
   };
+
+  public updateMatch = async (
+    id: string,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+
+  ) : Promise<MatchesInterface> => {
+    const match = await MatchModel.findByPk(id);
+
+    if (!match || match === undefined) {
+      throw new CustomError(404, 'There is no team with such id!');
+    }
+
+    const updatedMatch = await match.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    });
+
+    return updatedMatch as unknown as MatchesInterface;
+  };
 }
 
 export default MatchesService;
