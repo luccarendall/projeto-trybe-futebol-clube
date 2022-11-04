@@ -4,7 +4,7 @@ import MatchesServices from '../services/matchesService';
 class MatchesController {
   constructor(
     private matchesServices = new MatchesServices(),
-  ) { console.log('xablau'); }
+  ) { }
 
   public findAllMatchesData = async (_req: Request, res: Response) => {
     const matchesData = await this.matchesServices.findAllMatchesData();
