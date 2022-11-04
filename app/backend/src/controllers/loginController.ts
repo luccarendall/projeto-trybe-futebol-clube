@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import LoginService from '../services/loginService';
 import CustomError from '../CustomError/CustomError';
+import { SUCCESS } from '../middlewares/httpProtocols';
 
 class LoginController {
   constructor(private loginService = new LoginService()) { }
@@ -10,7 +11,7 @@ class LoginController {
 
     const token = await this.loginService.login(email, password);
 
-    return res.status(200).json({ token });
+    return res.status(SUCCESS).json({ token });
   };
 
   public loginToken = async (req: Request, res: Response) => {
@@ -22,7 +23,7 @@ class LoginController {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
     const token = authorization.replace('Bearer ', '');
     const role = await this.loginService.loginToken(token);
-    return res.status(200).json({ role });
+    return res.status(SUCCESS).json({ role });
   };
 }
 
