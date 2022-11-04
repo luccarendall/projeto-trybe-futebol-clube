@@ -9,7 +9,7 @@ const matchesController = new MatchesController();
 // matchesRoute.get('/', matchesController.findAllMatchesData);
 matchesRoute.get('/', matchesController.findMatchByProgress);
 matchesRoute.post('/', validateMatch, matchesController.featNewMatch);
-matchesRoute.put('/:id/finish', matchesController.finishedMatch);
-matchesRoute.put('/:id', matchesController.updateMatch);
+matchesRoute.patch('/:id/finish', matchesController.finishedMatch);
+matchesRoute.patch('/:id', matchesController.updateMatch);
 
 export default matchesRoute;

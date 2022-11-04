@@ -10,23 +10,24 @@ const ValidateMatch = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   const { homeTeam, awayTeam } = req.body;
 
+  const UNPROCESSABLE_ENTITY = 422;
+  const UNAUTHORIZED = 401;
+
   if (homeTeam === awayTeam) {
-    return res.status(401).json({
+    return res.status(UNPROCESSABLE_ENTITY).json({
       message: 'It is not possible to create a match with two equal teams',
     });
   }
 
   try {
     if (!authorization) {
-      return res.status(401).json({ message: 'Invalid Token!' });
+      return res.status(UNAUTHORIZED).json({ message: 'Token must be a valid token' });
     }
 
     const valitationToken = authorization.replace('Bearer ', '');
 
     JWT.verify(valitationToken, 'jwt_secret') as TokenInterface;
-  } catch (err) {
-    throw new CustomError(401, 'Token must be a valid token');
-  }
+  } catch (err) { throw new CustomError(UNAUTHORIZED, 'Token must be a valid token'); }
 
   next();
 };
