@@ -5,7 +5,7 @@ import TokenInterface from '../interfaces/TokenInterface';
 import CustomError from '../CustomError/CustomError';
 
 // DOC: https://community.smartbear.com/t5/SwaggerHub-Questions/How-to-replace-quot-bearer-quot-in-Bearer-Authentication-with/td-p/207705
-
+// DOC: https:// www.freecodecamp.org/portuguese/news/como-simplificar-e-deixar-limpa-a-validacao-de-entrada-na-aplicacao-do-express-js/
 const ValidateMatch = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   const { homeTeam, awayTeam } = req.body;
