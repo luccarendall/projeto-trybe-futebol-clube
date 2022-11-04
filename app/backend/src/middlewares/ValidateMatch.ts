@@ -24,10 +24,9 @@ const ValidateMatch = (req: Request, res: Response, next: NextFunction) => {
       return res.status(UNAUTHORIZED).json({ message: 'Token must be a valid token' });
     }
 
-    const valitationToken = authorization.replace('Bearer ', '');
-
-    JWT.verify(valitationToken, 'jwt_secret') as TokenInterface;
-  } catch (err) { throw new CustomError(UNAUTHORIZED, 'Token must be a valid token'); }
+    JWT.verify(authorization, 'jwt_secret') as TokenInterface;
+  } catch (err) { return res.status(UNAUTHORIZED).json({ message: 'Token must be a valid token' });
+  }
 
   next();
 };
